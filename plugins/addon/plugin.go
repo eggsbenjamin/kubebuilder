@@ -1,7 +1,7 @@
 package addon
 
 import (
-	"sigs.k8s.io/kubebuilder/pkg/model"
+	"github.com/eggsbenjamin/kubebuilder/pkg/model"
 )
 
 type Plugin struct {

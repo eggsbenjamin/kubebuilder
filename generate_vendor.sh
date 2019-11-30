@@ -34,7 +34,7 @@ fi
 
 build_kb() {
 	rm -f /tmp/kb && \
-	GO111MODULE=on go build -o /tmp/kb sigs.k8s.io/kubebuilder/cmd
+	GO111MODULE=on go build -o /tmp/kb github.com/eggsbenjamin/kubebuilder/cmd
 }
 
 
@@ -45,7 +45,7 @@ build_kb() {
 #
 generate_vendor() {
 	version=$1
-	project_dir=${go_workspace}/src/sigs.k8s.io/kubebuilder-test
+	project_dir=${go_workspace}/src/github.com/eggsbenjamin/kubebuilder-test
 	mkdir -p ${project_dir}
 	rm -rf ${project_dir}/*
 	pushd . 

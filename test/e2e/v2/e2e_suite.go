@@ -24,7 +24,7 @@ import (
 	"strings"
 	"time"
 
-	"sigs.k8s.io/kubebuilder/test/e2e/utils"
+	"github.com/eggsbenjamin/kubebuilder/test/e2e/utils"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"

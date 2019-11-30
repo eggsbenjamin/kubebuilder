@@ -20,8 +20,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/input"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/resource"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/input"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/resource"
 )
 
 // Test scaffolds a Controller Test

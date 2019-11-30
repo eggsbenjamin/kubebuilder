@@ -27,13 +27,13 @@ import (
 	"github.com/spf13/cobra"
 	flag "github.com/spf13/pflag"
 
-	"sigs.k8s.io/kubebuilder/pkg/model"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/input"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/project"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/resource"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/v1/manager"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/v1/webhook"
+	"github.com/eggsbenjamin/kubebuilder/pkg/model"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/input"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/project"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/resource"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/v1/manager"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/v1/webhook"
 )
 
 func newWebhookCmd() *cobra.Command {

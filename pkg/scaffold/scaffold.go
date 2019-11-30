@@ -28,9 +28,9 @@ import (
 	"text/template"
 
 	"golang.org/x/tools/imports"
-	"sigs.k8s.io/kubebuilder/pkg/model"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/input"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/project"
+	"github.com/eggsbenjamin/kubebuilder/pkg/model"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/input"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/project"
 	"sigs.k8s.io/yaml"
 )
 

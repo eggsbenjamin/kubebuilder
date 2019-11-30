@@ -19,7 +19,7 @@ set -e
 source common.sh
 
 build_kb() {
-	go build -o ./bin/kubebuilder sigs.k8s.io/kubebuilder/cmd
+	go build -o ./bin/kubebuilder github.com/eggsbenjamin/kubebuilder/cmd
 }
 
 
@@ -60,7 +60,7 @@ scaffold_test_project() {
 	elif [ $version == "2" ]; then
 		export GO111MODULE=on
 		export PATH=$PATH:$(go env GOPATH)/bin
-		go mod init sigs.k8s.io/kubebuilder/testdata/project-v2  # our repo autodetection will traverse up to the kb module if we don't do this
+		go mod init github.com/eggsbenjamin/kubebuilder/testdata/project-v2  # our repo autodetection will traverse up to the kb module if we don't do this
 
 		$kb init --project-version $version --domain testproject.org --license apache2 --owner "The Kubernetes authors"
 		$kb create api --group crew --version v1 --kind Captain --controller=true --resource=true --make=false

@@ -1,7 +1,7 @@
 # A Brief Aside: What's the rest of this stuff?
 
 If you've taken a peek at the rest of the files in the
-[`api/v1/`](https://sigs.k8s.io/kubebuilder/docs/book/src/cronjob-tutorial/testdata/project/api/v1)
+[`api/v1/`](https://github.com/eggsbenjamin/kubebuilder/docs/book/src/cronjob-tutorial/testdata/project/api/v1)
 directory, you might have noticed two additional files beyond
 `cronjob_types.go`: `groupversion_info.go` and `zz_generated.deepcopy.go`.
 

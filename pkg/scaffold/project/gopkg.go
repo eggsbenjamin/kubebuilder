@@ -23,7 +23,7 @@ import (
 	"io/ioutil"
 	"strings"
 
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/input"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/input"
 )
 
 var _ input.File = &GopkgToml{}

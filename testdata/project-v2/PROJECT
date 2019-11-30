@@ -1,5 +1,5 @@
 domain: testproject.org
-repo: sigs.k8s.io/kubebuilder/testdata/project-v2
+repo: github.com/eggsbenjamin/kubebuilder/testdata/project-v2
 resources:
 - group: crew
   kind: Captain

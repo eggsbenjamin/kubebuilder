@@ -30,7 +30,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/envtest"
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
-	crewv1 "sigs.k8s.io/kubebuilder/testdata/project-v2/api/v1"
+	crewv1 "github.com/eggsbenjamin/kubebuilder/testdata/project-v2/api/v1"
 	// +kubebuilder:scaffold:imports
 )
 

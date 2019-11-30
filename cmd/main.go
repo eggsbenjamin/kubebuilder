@@ -26,9 +26,9 @@ import (
 	"github.com/spf13/cobra"
 	"golang.org/x/tools/go/packages"
 
-	"sigs.k8s.io/kubebuilder/cmd/version"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/project"
+	"github.com/eggsbenjamin/kubebuilder/cmd/version"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/project"
 )
 
 const (

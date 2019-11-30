@@ -19,7 +19,7 @@ package project
 import (
 	"fmt"
 
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/input"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/input"
 	"sigs.k8s.io/yaml"
 )
 

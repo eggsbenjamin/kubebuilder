@@ -4,7 +4,7 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
-	. "sigs.k8s.io/kubebuilder/pkg/scaffold/resource"
+	. "github.com/eggsbenjamin/kubebuilder/pkg/scaffold/resource"
 )
 
 var _ = Describe("Resource", func() {

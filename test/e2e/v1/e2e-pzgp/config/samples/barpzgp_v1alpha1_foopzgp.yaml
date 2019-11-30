@@ -1,0 +1,9 @@
+apiVersion: barpzgp.example.compzgp/v1alpha1
+kind: Foopzgp
+metadata:
+  labels:
+    controller-tools.k8s.io: "1.0"
+  name: foopzgp-sample
+spec:
+  # Add fields here
+  foo: bar

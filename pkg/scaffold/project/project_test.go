@@ -11,13 +11,13 @@ import (
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"sigs.k8s.io/kubebuilder/pkg/model"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/input"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/project"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/scaffoldtest"
-	scaffoldv1 "sigs.k8s.io/kubebuilder/pkg/scaffold/v1"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/v1/metricsauth"
+	"github.com/eggsbenjamin/kubebuilder/pkg/model"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/input"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/project"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/scaffoldtest"
+	scaffoldv1 "github.com/eggsbenjamin/kubebuilder/pkg/scaffold/v1"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/v1/metricsauth"
 )
 
 var _ = Describe("Project", func() {

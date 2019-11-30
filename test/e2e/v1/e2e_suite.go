@@ -20,7 +20,7 @@ import (
 	"fmt"
 	"os/exec"
 	"path/filepath"
-	"sigs.k8s.io/kubebuilder/test/e2e/utils"
+	"github.com/eggsbenjamin/kubebuilder/test/e2e/utils"
 	"strings"
 	"time"
 

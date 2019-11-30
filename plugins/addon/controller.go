@@ -4,8 +4,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"sigs.k8s.io/kubebuilder/pkg/model"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/input"
+	"github.com/eggsbenjamin/kubebuilder/pkg/model"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/input"
 )
 
 func ReplaceController(u *model.Universe) error {
@@ -37,9 +37,9 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/handler"
 	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 	"sigs.k8s.io/controller-runtime/pkg/source"
-	"sigs.k8s.io/kubebuilder-declarative-pattern/pkg/patterns/addon"
-	"sigs.k8s.io/kubebuilder-declarative-pattern/pkg/patterns/addon/pkg/status"
-	"sigs.k8s.io/kubebuilder-declarative-pattern/pkg/patterns/declarative"
+	"github.com/eggsbenjamin/kubebuilder-declarative-pattern/pkg/patterns/addon"
+	"github.com/eggsbenjamin/kubebuilder-declarative-pattern/pkg/patterns/addon/pkg/status"
+	"github.com/eggsbenjamin/kubebuilder-declarative-pattern/pkg/patterns/declarative"
 
 	"github.com/go-logr/logr"
 	"k8s.io/apimachinery/pkg/runtime"

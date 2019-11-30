@@ -24,7 +24,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"sigs.k8s.io/kubebuilder/docs/book/utils/plugin"
+	"github.com/eggsbenjamin/kubebuilder/docs/book/utils/plugin"
 )
 
 // argType produces HTML for describing an Argument's type.

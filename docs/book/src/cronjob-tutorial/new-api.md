@@ -12,7 +12,7 @@ The first time we call this command for each group-version, it will create
 a directory for the new group-version.
 
 In this case, the
-[`api/v1/`](https://sigs.k8s.io/kubebuilder/docs/book/src/cronjob-tutorial/testdata/project/api/v1)
+[`api/v1/`](https://github.com/eggsbenjamin/kubebuilder/docs/book/src/cronjob-tutorial/testdata/project/api/v1)
 directory is created, corresponding to the
 `batch.tutorial.kubebuilder.io/v1` (remember our [`--domain`
 setting](cronjob-tutorial.md#scaffolding-out-our-project) from the

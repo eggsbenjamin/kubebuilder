@@ -21,17 +21,18 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/v2/bpmn"
 	"github.com/gobuffalo/flect"
 
-	"sigs.k8s.io/kubebuilder/pkg/model"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/input"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/project"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/resource"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/util"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/v1/controller"
-	crdv1 "sigs.k8s.io/kubebuilder/pkg/scaffold/v1/crd"
-	scaffoldv2 "sigs.k8s.io/kubebuilder/pkg/scaffold/v2"
-	crdv2 "sigs.k8s.io/kubebuilder/pkg/scaffold/v2/crd"
+	"github.com/eggsbenjamin/kubebuilder/pkg/model"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/input"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/project"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/resource"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/util"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/v1/controller"
+	crdv1 "github.com/eggsbenjamin/kubebuilder/pkg/scaffold/v1/crd"
+	scaffoldv2 "github.com/eggsbenjamin/kubebuilder/pkg/scaffold/v2"
+	crdv2 "github.com/eggsbenjamin/kubebuilder/pkg/scaffold/v2/crd"
 )
 
 // API contains configuration for generating scaffolding for Go type
@@ -54,6 +55,9 @@ type API struct {
 
 	// Force indicates that the resource should be created even if it already exists.
 	Force bool
+
+	// BPMNDefinition to scaffold controller from (optional)
+	BPMNDefinition *bpmn.Definition
 }
 
 // Validate validates whether API scaffold has correct bits to generate
@@ -239,7 +243,15 @@ func (api *API) scaffoldV2() error {
 			Plugins: api.Plugins,
 		}
 
+		// WIZARD: if bpmn speficied here generate accompnying action file and
+		// alternate conftroller file
+
 		ctrlScaffolder := &scaffoldv2.Controller{Resource: r}
+
+		if api.BPMNDefinition != nil {
+			ctrlScaffolder.FromBPMN = true
+		}
+
 		testsuiteScaffolder := &scaffoldv2.ControllerSuiteTest{Resource: r}
 		err := scaffold.Execute(
 			api.buildUniverse(),

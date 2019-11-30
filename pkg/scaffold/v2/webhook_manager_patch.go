@@ -19,7 +19,7 @@ package v2
 import (
 	"path/filepath"
 
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/input"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/input"
 )
 
 // CRDWebhookPatch scaffolds a CRDWebhookPatch for a Resource

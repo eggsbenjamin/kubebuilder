@@ -23,8 +23,8 @@ import (
 
 	"github.com/gobuffalo/flect"
 
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/input"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/resource"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/input"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/resource"
 )
 
 // EnableCAInjectionPatch scaffolds a EnableCAInjectionPatch for a Resource

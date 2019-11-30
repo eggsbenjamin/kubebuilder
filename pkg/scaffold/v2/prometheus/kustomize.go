@@ -18,7 +18,7 @@ package prometheus
 
 import (
 	"path/filepath"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/input"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/input"
 )
 
 // Kustomization scaffolds the kustomizaiton in the prometheus folder

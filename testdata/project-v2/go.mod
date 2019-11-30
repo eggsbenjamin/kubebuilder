@@ -1,4 +1,4 @@
-module sigs.k8s.io/kubebuilder/testdata/project-v2
+module github.com/eggsbenjamin/kubebuilder/testdata/project-v2
 
 go 1.13
 

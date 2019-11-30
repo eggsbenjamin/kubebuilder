@@ -27,10 +27,10 @@ import (
 	"github.com/spf13/cobra"
 	flag "github.com/spf13/pflag"
 
-	"sigs.k8s.io/kubebuilder/cmd/util"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/resource"
-	"sigs.k8s.io/kubebuilder/plugins/addon"
+	"github.com/eggsbenjamin/kubebuilder/cmd/util"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/resource"
+	"github.com/eggsbenjamin/kubebuilder/plugins/addon"
 )
 
 type apiOptions struct {

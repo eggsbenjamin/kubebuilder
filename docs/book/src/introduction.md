@@ -41,7 +41,7 @@ Including:
 
 ## Resources
 
-* Repository: [sigs.k8s.io/kubebuilder](https://sigs.k8s.io/kubebuilder)
+* Repository: [github.com/eggsbenjamin/kubebuilder](https://github.com/eggsbenjamin/kubebuilder)
 
 * Slack channel: [#kubebuilder](http://slack.k8s.io/#kubebuilder)
 

@@ -29,9 +29,9 @@ import (
 	"github.com/spf13/cobra"
 	flag "github.com/spf13/pflag"
 
-	"sigs.k8s.io/kubebuilder/cmd/util"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/project"
+	"github.com/eggsbenjamin/kubebuilder/cmd/util"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/project"
 )
 
 func newInitProjectCmd() *cobra.Command {

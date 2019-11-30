@@ -19,7 +19,7 @@ package certmanager
 import (
 	"path/filepath"
 
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/input"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/input"
 )
 
 // KustomizeConfig scaffolds the kustomizeconfig in the certmanager folder

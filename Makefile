@@ -50,11 +50,11 @@ generate: ## Update/generate all mock data. You should run this commands to upda
 	go mod tidy
 
 .PHONY: generate-testdata
-generate-testdata: ## Update/generate the testdata in $GOPATH/src/sigs.k8s.io/kubebuilder
+generate-testdata: ## Update/generate the testdata in $GOPATH/src/github.com/eggsbenjamin/kubebuilder
 	GO111MODULE=on ./generate_golden.sh
 
 .PHONY: generate-vendor
-generate-vendor: ## (Deprecated) Update/generate the vendor by using the path $GOPATH/src/sigs.k8s.io/kubebuilder-test
+generate-vendor: ## (Deprecated) Update/generate the vendor by using the path $GOPATH/src/github.com/eggsbenjamin/kubebuilder-test
 	GO111MODULE=off ./generate_vendor.sh
 
 .PHONY: generate-setup

@@ -151,7 +151,7 @@ dump_project
 test_create_namespaced_coretype_controller
 
 header_text "running kubebuilder unit tests"
-cd ${go_workspace}/src/sigs.k8s.io/kubebuilder
+cd ${go_workspace}/src/github.com/eggsbenjamin/kubebuilder
 
 export GO111MODULE=on
 go test ./cmd/... ./pkg/...

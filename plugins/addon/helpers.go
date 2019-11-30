@@ -7,7 +7,7 @@ import (
 	"text/template"
 
 	"github.com/gobuffalo/flect"
-	"sigs.k8s.io/kubebuilder/pkg/model"
+	"github.com/eggsbenjamin/kubebuilder/pkg/model"
 )
 
 // This file gathers functions that are likely to be useful to other

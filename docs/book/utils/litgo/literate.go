@@ -29,7 +29,7 @@ import (
 	"strings"
 	"unicode"
 
-	"sigs.k8s.io/kubebuilder/docs/book/utils/plugin"
+	"github.com/eggsbenjamin/kubebuilder/docs/book/utils/plugin"
 )
 
 // Literate is a plugin that extracts block comments from Go source and
@@ -288,7 +288,7 @@ func wrapWithNewlines(src string) string {
 }
 
 func main() {
-	baseURL, err := url.Parse("https://sigs.k8s.io/kubebuilder/docs/book/src")
+	baseURL, err := url.Parse("https://github.com/eggsbenjamin/kubebuilder/docs/book/src")
 	if err != nil {
 		log.Fatal(err.Error())
 	}

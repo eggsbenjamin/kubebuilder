@@ -23,10 +23,10 @@ Please see https://git.k8s.io/community/CLA.md for more info.
 
 ## How to build kubebuilder locally
 
-1. Run the following command to clone your fork of the project locally in the dir /src/sigs.k8s.io/kubebuilder
+1. Run the following command to clone your fork of the project locally in the dir /src/github.com/eggsbenjamin/kubebuilder
 
 ```
-$ git clone git@github.com:<user>/kubebuilder.git $GOPATH/src/sigs.k8s.io/kubebuilder
+$ git clone git@github.com:<user>/kubebuilder.git $GOPATH/src/github.com/eggsbenjamin/kubebuilder
 ```
 
 1. Ensure you activate module support before continue (`$ export GO111MODULE=on`)
@@ -36,7 +36,7 @@ $ git clone git@github.com:<user>/kubebuilder.git $GOPATH/src/sigs.k8s.io/kubebu
 ## How to test kubebuilder locally
 
 1. Run the tests by using the command `make test`. It will execute unit tests. 
-1. Run the script `make generate` to update/generate the mock data used in the e2e test in `$GOPATH/src/sigs.k8s.io/kubebuilder/testdata/`
+1. Run the script `make generate` to update/generate the mock data used in the e2e test in `$GOPATH/src/github.com/eggsbenjamin/kubebuilder/testdata/`
 
 **IMPORTANT:** The `make generate` is very helpful. By using it, you can check if good part of the commands still working successfully after the changes. Also, note that its usage is a pre-requirement to submit a PR.
  

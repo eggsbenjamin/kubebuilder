@@ -17,7 +17,7 @@ This Quick Start guide will cover:
 
 ## Installation
 
-Install [kubebuilder](https://sigs.k8s.io/kubebuilder):
+Install [kubebuilder](https://github.com/eggsbenjamin/kubebuilder):
 
 ```bash
 os=$(go env GOOS)

@@ -1,0 +1,3 @@
+version: "1"
+domain: example.comfbzd
+repo: github.com/eggsbenjamin/kubebuilder/test/e2e/v1/e2e-fbzd

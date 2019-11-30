@@ -26,13 +26,13 @@ import (
 	"github.com/gobuffalo/flect"
 	"github.com/spf13/cobra"
 
-	"sigs.k8s.io/kubebuilder/pkg/model"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/input"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/project"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/resource"
-	scaffoldv2 "sigs.k8s.io/kubebuilder/pkg/scaffold/v2"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/v2/webhook"
+	"github.com/eggsbenjamin/kubebuilder/pkg/model"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/input"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/project"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/resource"
+	scaffoldv2 "github.com/eggsbenjamin/kubebuilder/pkg/scaffold/v2"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/v2/webhook"
 )
 
 func newWebhookV2Cmd() *cobra.Command {

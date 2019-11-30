@@ -28,8 +28,8 @@ import (
 	"github.com/onsi/ginkgo"
 	"github.com/onsi/gomega"
 
-	"sigs.k8s.io/kubebuilder/pkg/scaffold"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/input"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/input"
 )
 
 // TestResult is the result of running the scaffolding.
@@ -42,7 +42,7 @@ type TestResult struct {
 }
 
 func getProjectRoot() string {
-	return path.Join(build.Default.GOPATH, "src", "sigs.k8s.io", "kubebuilder")
+	return path.Join(build.Default.GOPATH, "src", "github.com", "eggsbenjamin", "kubebuilder")
 }
 
 // ProjectPath is the path to the controller-tools/testdata project file

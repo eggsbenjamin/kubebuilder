@@ -23,7 +23,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/resource"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/resource"
 )
 
 func GetResourceInfo(r *resource.Resource, repo, domain string) (resourcePackage, groupDomain string) {

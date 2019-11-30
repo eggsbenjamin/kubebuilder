@@ -19,8 +19,8 @@ package addon
 import (
 	"path/filepath"
 
-	"sigs.k8s.io/kubebuilder/pkg/model"
-	"sigs.k8s.io/kubebuilder/pkg/scaffold/input"
+	"github.com/eggsbenjamin/kubebuilder/pkg/model"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/input"
 )
 
 const exampleChannel = `# Versions for the stable channel
