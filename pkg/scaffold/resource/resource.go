@@ -50,6 +50,9 @@ type Resource struct {
 
 	// CreateExampleReconcileBody will create a Deployment in the Reconcile example
 	CreateExampleReconcileBody bool
+
+	// BPMNPath is the path to an optional BPMN path
+	BPMNPath string
 }
 
 // Validate checks the Resource values to make sure they are valid.
@@ -85,7 +88,7 @@ func (r *Resource) Validate() error {
 	}
 	// Replace the caracter "-" for "" to allow scaffold the go imports
 	r.GroupImportSafe = strings.Replace(r.Group, "-", "", -1)
-    r.GroupImportSafe = strings.Replace(r.GroupImportSafe, ".", "", -1)
+	r.GroupImportSafe = strings.Replace(r.GroupImportSafe, ".", "", -1)
 	return nil
 }
 

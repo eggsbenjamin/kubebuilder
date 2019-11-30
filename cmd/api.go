@@ -19,6 +19,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
@@ -30,6 +31,7 @@ import (
 	"github.com/eggsbenjamin/kubebuilder/cmd/util"
 	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold"
 	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/resource"
+	"github.com/eggsbenjamin/kubebuilder/pkg/scaffold/v2/bpmn"
 	"github.com/eggsbenjamin/kubebuilder/plugins/addon"
 )
 
@@ -68,6 +70,7 @@ func resourceForFlags(f *flag.FlagSet) *resource.Resource {
 	f.StringVar(&r.Kind, "kind", "", "resource Kind")
 	f.StringVar(&r.Group, "group", "", "resource Group")
 	f.StringVar(&r.Version, "version", "", "resource Version")
+	f.StringVar(&r.BPMNPath, "bpmn-file", "", "bpmn file from which to scaffold controller (optional)")
 	f.BoolVar(&r.Namespaced, "namespaced", true, "resource is namespaced")
 	f.BoolVar(&r.CreateExampleReconcileBody, "example", true,
 		"if true an example reconcile body should be written while scaffolding a resource.")
@@ -102,6 +105,22 @@ func (o *apiOptions) runAddAPI() {
 	if !o.controllerFlag.Changed {
 		fmt.Println("Create Controller [y/n]")
 		o.apiScaffolder.DoController = util.Yesno(reader)
+	}
+
+	if o.apiScaffolder.Resource.BPMNPath != "" {
+		bpmnXML, err := ioutil.ReadFile(o.apiScaffolder.Resource.BPMNPath)
+		if err != nil {
+			log.Fatalf("error reading bpmn file: %q", err)
+		}
+
+		bpmnDef, err := bpmn.Unmarshal(bpmnXML)
+		if err != nil {
+			log.Fatalf("error unmarshaling bpmn xml: %q", err)
+		}
+
+		o.apiScaffolder.BPMNDefinition = bpmnDef
+
+		log.Printf("Scaffolding controller from BPMN file: %s\n", o.apiScaffolder.Resource.BPMNPath)
 	}
 
 	fmt.Println("Writing scaffold for you to edit...")
