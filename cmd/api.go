@@ -70,7 +70,7 @@ func resourceForFlags(f *flag.FlagSet) *resource.Resource {
 	f.StringVar(&r.Kind, "kind", "", "resource Kind")
 	f.StringVar(&r.Group, "group", "", "resource Group")
 	f.StringVar(&r.Version, "version", "", "resource Version")
-	f.StringVar(&r.BPMNPath, "bpmn-file", "", "bpmn file from which to scaffold controller (optional)")
+	f.StringVar(&r.BPMNPath, "bpmn-path", "", "bpmn file from which to scaffold controller (optional)")
 	f.BoolVar(&r.Namespaced, "namespaced", true, "resource is namespaced")
 	f.BoolVar(&r.CreateExampleReconcileBody, "example", true,
 		"if true an example reconcile body should be written while scaffolding a resource.")

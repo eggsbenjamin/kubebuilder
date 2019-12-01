@@ -77,7 +77,7 @@ package controllers
 import (
 	"context"
 
-	"github.com/go-r.Logr/r.Logr"
+	"github.com/go-logr/logr"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -118,7 +118,7 @@ package controllers
 import (
 	"context"
 
-	"github.com/go-r.Logr/r.Logr"
+	"github.com/go-logr/logr"
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -129,13 +129,13 @@ import (
 // {{ .Resource.Kind }}Reconciler reconciles a {{ .Resource.Kind }} object
 type {{ .Resource.Kind }}Reconciler struct {
 	client.Client
-	Log r.Logr.Logger
+	Log logr.Logger
 	Scheme *runtime.Scheme
+	actionIdentifier {{ .Resource.Kind }}ActionIdentifier
 }
 
 // +kubebuilder:rbac:groups={{.GroupDomain}},resources={{ .Plural }},verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups={{.GroupDomain}},resources={{ .Plural }}/status,verbs=get;update;patch
-
 func (r *{{ .Resource.Kind }}Reconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 	_ = context.Background()
 	_ = r.Log.WithValues("{{ .Resource.Kind | lower }}", req.NamespacedName)
@@ -143,8 +143,8 @@ func (r *{{ .Resource.Kind }}Reconciler) Reconcile(req ctrl.Request) (ctrl.Resul
 	// your r.Logic here
 
 
-	couchbaseRebalance := &emissaryv1alpha1.{{ .Resource.Kind }}{}
-	err := r.Get(context.TODO(), request.NamespacedName, couchbaseRebalance)
+	couchbaseRebalance := &{{ .Resource.GroupImportSafe }}{{ .Resource.Version }}.{{ .Resource.Kind }}{}
+	err := r.Get(context.TODO(), req.NamespacedName, couchbaseRebalance)
 	if err != nil {
 		if errors.IsNotFound(err) {
 			r.Log.Info("{{ .Resource.Kind }} not found")
@@ -155,7 +155,7 @@ func (r *{{ .Resource.Kind }}Reconciler) Reconcile(req ctrl.Request) (ctrl.Resul
 		return ctrl.Result{}, err
 	}
 
-	clusterState, err := r.GatherRelevantClusterState(GatherRelevantClusterStateInput{
+	clusterState, err := r.Gather{{ .Resource.Kind }}ClusterState(Gather{{ .Resource.Kind }}ClusterStateInput{
 		{{ .Resource.Kind }}: couchbaseRebalance,
 		Logger:             r.Log,
 	})
@@ -163,7 +163,7 @@ func (r *{{ .Resource.Kind }}Reconciler) Reconcile(req ctrl.Request) (ctrl.Resul
 		return ctrl.Result{}, err
 	}
 
-	action, err := r.actionIdentifier.IdentifyAction(IdentifyActionInput{
+	action, err := r.actionIdentifier.Identify{{ .Resource.Kind }}Action(Identify{{ .Resource.Kind }}ActionInput{
 		State:  clusterState,
 		Logger: r.Log,
 	})
@@ -183,12 +183,28 @@ func (r *{{ .Resource.Kind }}Reconciler) Reconcile(req ctrl.Request) (ctrl.Resul
 	return ctrl.Result{}, nil
 }
 
+type Identify{{ .Resource.Kind }}ActionInput struct {
+	State {{ .Resource.Kind }}ClusterState
+	Logger logr.Logger
+}
 
-func (r *Reconcile{{ .Resource.Kind }}) GatherRelevantClusterState(input GatherRelevantClusterStateInput) (ClusterState, error) {
-	// gather all relevant cluster state here
+type {{ .Resource.Kind }}ClusterState struct {
+	{{ .Resource.Kind }} *{{.Resource.GroupImportSafe }}{{ .Resource.Version }}.{{ .Resource.Kind }} 
 
-	return ClusterState{
-		{{ .Resource.Kind }}:             input.{{ .Resource.Kind }},
+	// declare relevant state here
+}
+
+type Gather{{ .Resource.Kind }}ClusterStateInput struct{
+	{{ .Resource.Kind }} *{{.Resource.GroupImportSafe }}{{ .Resource.Version }}.{{ .Resource.Kind }} 
+	Logger logr.Logger
+}
+
+func (r *{{ .Resource.Kind }}Reconciler) Gather{{ .Resource.Kind }}ClusterState(input Gather{{ .Resource.Kind }}ClusterStateInput) ({{ .Resource.Kind }}ClusterState, error) {
+
+	// gather all relevant cluster state and return
+
+	return {{ .Resource.Kind }}ClusterState{
+		{{ .Resource.Kind }}: input.{{ .Resource.Kind }},
 	}, nil
 }
 
