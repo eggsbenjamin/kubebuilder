@@ -145,10 +145,10 @@ func (a *Action) DFSInner(def *bpmn.Definition, v string, visited map[string]str
 	}
 
 	if len(terminalElements) > 1 {
-		return fmt.Errorf("unable to execute actions concurrently. Element %s can only have a single TaskEvent or EndEvent element as a direct child")
+		return fmt.Errorf("unable to execute actions concurrently. Element %s can only have a single TaskEvent or EndEvent element as a direct child", v)
 	}
 
-	elements = append(elements, terminalElements...) // we know that there is a a single terminal element and it must come after the others
+	elements = append(elements, terminalElements...) // we know that there is a single terminal element and it must come after the others
 
 	for _, elem := range elements {
 		switch elem.Type() {
@@ -157,7 +157,7 @@ func (a *Action) DFSInner(def *bpmn.Definition, v string, visited map[string]str
 			fmt.Fprintf(out, "\nif %s(input.State) {\n", getConditionFuncName(egw))
 			a.DFSInner(def, egw.ID, visited, out)
 		case bpmn.ElementTypeTask:
-			fmt.Fprintf(out, "\nreturn &%sAction{}, nil", getActionName(elem.(bpmn.Task)))
+			fmt.Fprintf(out, "\nreturn &%sAction{\nInput: input,\n}, nil", getActionName(elem.(bpmn.Task)))
 		case bpmn.ElementTypeEnd:
 			fmt.Fprintf(out, "\nreturn nil, nil")
 		}
@@ -219,8 +219,7 @@ type {{ .Resource.Kind }}Action interface {
 
 {{ range .ActionNames }}
 type {{ . }}Action struct {
-	k8sClient          client.Client
-	// add other action dependencies
+	Input Identify{{ $.Resource.Kind }}ActionInput
 }
 
 func (a *{{ . }}Action) Execute(state {{ $.Resource.Kind }}ClusterState) error {
