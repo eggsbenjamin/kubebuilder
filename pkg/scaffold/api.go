@@ -247,17 +247,28 @@ func (api *API) scaffoldV2() error {
 		// alternate conftroller file
 
 		ctrlScaffolder := &scaffoldv2.Controller{Resource: r}
+		testsuiteScaffolder := &scaffoldv2.ControllerSuiteTest{Resource: r}
+
+		files := []input.File{
+			ctrlScaffolder,
+			testsuiteScaffolder,
+		}
 
 		if api.BPMNDefinition != nil {
 			ctrlScaffolder.FromBPMN = true
+
+			actionsScaffolder := &scaffoldv2.Action{
+				Resource:       r,
+				BPMNDefinition: api.BPMNDefinition,
+			}
+
+			files = append(files, actionsScaffolder)
 		}
 
-		testsuiteScaffolder := &scaffoldv2.ControllerSuiteTest{Resource: r}
 		err := scaffold.Execute(
 			api.buildUniverse(),
 			input.Options{},
-			testsuiteScaffolder,
-			ctrlScaffolder,
+			files...,
 		)
 		if err != nil {
 			return fmt.Errorf("error scaffolding controller: %v", err)
