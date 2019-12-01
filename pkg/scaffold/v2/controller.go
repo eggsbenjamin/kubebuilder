@@ -183,11 +183,6 @@ func (r *{{ .Resource.Kind }}Reconciler) Reconcile(req ctrl.Request) (ctrl.Resul
 	return ctrl.Result{}, nil
 }
 
-type Identify{{ .Resource.Kind }}ActionInput struct {
-	State {{ .Resource.Kind }}ClusterState
-	Logger logr.Logger
-}
-
 type {{ .Resource.Kind }}ClusterState struct {
 	{{ .Resource.Kind }} *{{.Resource.GroupImportSafe }}{{ .Resource.Version }}.{{ .Resource.Kind }} 
 

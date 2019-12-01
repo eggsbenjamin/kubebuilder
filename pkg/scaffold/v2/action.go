@@ -17,6 +17,9 @@ limitations under the License.
 package v2
 
 import (
+	"bytes"
+	"fmt"
+	"io"
 	"path/filepath"
 	"strings"
 
@@ -52,6 +55,9 @@ type Action struct {
 
 	// Formatted BPMNDefinition Task names to scaffold Actions
 	ActionNames []string
+
+	// RenderedActionIdentifierFunction pre rendered due to complexity
+	RenderedActionIdentifierFunction string
 }
 
 // GetInput implements input.File
@@ -69,27 +75,117 @@ func (a *Action) GetInput() (input.Input, error) {
 	}
 
 	for _, egw := range a.BPMNDefinition.Process.ExclusiveGateways {
-		name := egw.Name
-		if name == "" {
-			name = egw.ID
-		}
-
-		a.ConditionFuncNames = append(a.ConditionFuncNames, strings.ReplaceAll(name, " ", ""))
+		a.ConditionFuncNames = append(a.ConditionFuncNames, getConditionFuncName(egw))
 	}
 
 	for _, task := range a.BPMNDefinition.Process.Tasks {
-		name := task.Name
-		if name == "" {
-			name = task.ID
-		}
-
-		a.ActionNames = append(a.ActionNames, strings.ReplaceAll(name, " ", ""))
+		a.ActionNames = append(a.ActionNames, getActionName(task))
 	}
+
+	identifyActionFunctionBody, err := a.DFS(a.BPMNDefinition)
+	if err != nil {
+		return a.Input, fmt.Errorf("error rendering bpmn logical flow: %q", err)
+	}
+
+	a.RenderedActionIdentifierFunction = identifyActionFunctionBody
 
 	a.TemplateBody = actionTemplate
 
 	a.Input.IfExistsAction = input.Error
 	return a.Input, nil
+}
+
+// DFS performs a depth first search on the bpmn process to render the logic.
+func (a *Action) DFS(def *bpmn.Definition) (string, error) {
+	if def.Process.StartEvent.ID == "" {
+		return "", fmt.Errorf("missing StartEvent")
+	}
+
+	out := &bytes.Buffer{}
+
+	fmt.Fprintf(out, "func (i *%[1]sActionIdentifier) Identify%[1]sAction(input Identify%[1]sActionInput) (%[1]sAction, error) {\n", a.Resource.Kind)
+
+	visited := map[string]struct{}{}
+	a.DFSInner(def, def.Process.StartEvent.ID, visited, out)
+
+	fmt.Fprintf(out, "\n}\n")
+
+	return out.String(), nil
+}
+
+func (a *Action) DFSInner(def *bpmn.Definition, v string, visited map[string]struct{}, out io.Writer) error {
+	visited[v] = struct{}{}
+	elements := []bpmn.Element{}
+	terminalElements := []bpmn.Element{}
+
+	for _, v2 := range def.Process.DAG.AdjacenyList[v] {
+		if _, ok := visited[v2]; ok {
+			return nil // no more vertices to traverse
+		}
+
+		elem, ok := def.Process.GetElement(v2)
+		if !ok {
+			fmt.Errorf("unable to get element %v", v2)
+		}
+
+		switch elem.Type() {
+		case bpmn.ElementTypeExclusiveGateway:
+			elements = append(elements, elem)
+		case bpmn.ElementTypeTask:
+			terminalElements = append(terminalElements, elem)
+		case bpmn.ElementTypeEnd:
+			terminalElements = append(terminalElements, elem)
+		default:
+			return fmt.Errorf("unexpected element type %s", elem.Type())
+		}
+	}
+
+	if len(terminalElements) == 0 {
+		terminalElements = append(terminalElements, bpmn.EndEvent{}) // implicit end
+	}
+
+	if len(terminalElements) > 1 {
+		return fmt.Errorf("unable to execute actions concurrently. Element %s can only have a single TaskEvent or EndEvent element as a direct child")
+	}
+
+	elements = append(elements, terminalElements...) // we know that there is a a single terminal element and it must come after the others
+
+	for _, elem := range elements {
+		switch elem.Type() {
+		case bpmn.ElementTypeExclusiveGateway:
+			egw := elem.(bpmn.ExclusiveGateway)
+			fmt.Fprintf(out, "\nif %s(input.State) {\n", getConditionFuncName(egw))
+			a.DFSInner(def, egw.ID, visited, out)
+		case bpmn.ElementTypeTask:
+			fmt.Fprintf(out, "\nreturn &%sAction{}, nil", getActionName(elem.(bpmn.Task)))
+		case bpmn.ElementTypeEnd:
+			fmt.Fprintf(out, "\nreturn nil, nil")
+		}
+	}
+
+	if v != def.Process.StartEvent.ID {
+		fmt.Fprintf(out, "\n}\n")
+	}
+
+	return nil
+}
+
+func getConditionFuncName(c bpmn.ExclusiveGateway) string {
+	name := c.Name
+	if name == "" {
+		name = c.ID
+	}
+
+	return strings.ReplaceAll(name, " ", "")
+}
+
+func getActionName(t bpmn.Task) string {
+	name := t.Name
+	if name == "" {
+		name = t.ID
+	}
+
+	return strings.ReplaceAll(name, " ", "")
 }
 
 const actionTemplate = `{{ .Boilerplate }}
@@ -108,7 +204,7 @@ type {{ .Resource.Kind }}ConditionFunc func({{ .Resource.Kind }}ClusterState) bo
 
 {{ range .ConditionFuncNames }}
 	func {{ . }}(clusterState {{ $.Resource.Kind }}ClusterState) bool {
-		// implement condition
+		// implement condition logic
 		return false
 	}
 {{ end }}
@@ -128,6 +224,7 @@ type {{ . }}Action struct {
 }
 
 func (a *{{ . }}Action) Execute(state {{ $.Resource.Kind }}ClusterState) error {
+	// implement action logic
 	return nil
 }
 
@@ -136,6 +233,8 @@ func (a *{{ . }}Action) Name() string {
 }
 
 {{ end }}
+
+// Action Identifier
 	
 type {{ .Resource.Kind }}ActionIdentifier struct {
 	scheme             *runtime.Scheme
@@ -147,7 +246,12 @@ type {{ .Resource.Kind }}ActionIdentifierCfg struct {
 	K8sClient          client.Client
 }
 
-func (c *{{ .Resource.Kind }}ActionIdentifier) Identify{{ .Resource.Kind }}Action(input Identify{{ .Resource.Kind }}ActionInput) ({{ .Resource.Kind }}Action, error) {
-	return nil, nil
+type Identify{{ .Resource.Kind }}ActionInput struct {
+	State {{ .Resource.Kind }}ClusterState
+	Logger logr.Logger
 }
+
+// AUTOGENERATED FROM BPMN.
+
+{{ .RenderedActionIdentifierFunction }}
 `
